@@ -1,14 +1,13 @@
-import express, { Request, Response } from 'express'
+import { envs } from './config/envs'
+import { AppRoutes } from './presentation/routes'
+import { Server } from './presentation/server'
+;(() => {
+    main()
+})()
 
-const app = express()
-const port = 5000
-
-app.get('/', (req: Request, res: Response) => {
-    res.json({
-        message: 'Hello world from express'
-    })
-})
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-})
+async function main() {
+    new Server({
+        port: envs.PORT,
+        routes: AppRoutes.routes
+    }).start()
+}

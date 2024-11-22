@@ -1,16 +1,14 @@
 import { Router } from 'express'
+import { AuthRoutes } from './auth/routes'
+import { RecipesRoutes } from './recipe/routes'
 
 export class AppRoutes {
     static get routes() {
-        const routes = Router()
+        const router = Router()
 
-        //TODO: Add main routes here
-        routes.use('/', (req, res) => {
-            res.json({
-                message: 'Hello World!'
-            })
-        })
+        router.use('/auth', AuthRoutes.routes)
+        router.use('/recipes', RecipesRoutes.routes)
 
-        return routes
+        return router
     }
 }

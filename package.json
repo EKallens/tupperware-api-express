@@ -4,7 +4,7 @@
     "description": "Recipes Api made with express",
     "main": "index.js",
     "scripts": {
-        "dev": "tsnd --respawn --clear src/app.ts"
+        "dev": "nodemon src/app.ts"
     },
     "author": "EKallens",
     "license": "ISC",
@@ -12,13 +12,20 @@
         "dotenv": "^16.4.5",
         "env-var": "^7.5.0",
         "express": "^4.21.1",
-        "mongoose": "^8.8.2"
+        "module-alias": "^2.2.3",
+        "mongoose": "^8.8.2",
+        "winston": "^3.17.0"
     },
     "devDependencies": {
-        "@types/express": "^5.0.0",
+        "@types/express": "^4.17.21",
         "@types/node": "^22.9.1",
+        "nodemon": "^3.1.7",
         "ts-node": "^10.9.2",
         "ts-node-dev": "^2.0.0",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.6.3"
+    },
+    "_moduleAliases": {
+        "@/*": "build/src"
     }
 }

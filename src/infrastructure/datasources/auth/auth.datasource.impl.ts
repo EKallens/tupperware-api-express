@@ -1,3 +1,4 @@
+import { BcryptAdapter } from '@/config/bcrypt'
 import { logger } from '@/config/logger'
 import { UserModel } from '@/data/mongodb/models/user.model'
 import { AuthDataSource } from '@/domain/datasources/auth/auth.datasource'
@@ -7,14 +8,24 @@ import { UserEntity } from '@/domain/entities/user.entity'
 import { CustomError } from '@/domain/errors/custom.error'
 import { UserMapper } from '@/infrastructure/mappers/auth/user.mapper'
 
+type HashPassword = (password: string) => string
+type CompareFunction = (password: string, hashedPassword: string) => boolean
+
 export class AuthDataSourceImpl implements AuthDataSource {
+    constructor(
+        private readonly hashPassword: HashPassword = BcryptAdapter.hash,
+        private readonly comparePassword: CompareFunction = BcryptAdapter.compare
+    ) {}
+
     async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
         const { email, password } = loginUserDto
         try {
             const user = await UserModel.findOne({ email })
             if (!user) throw CustomError.badRequest('Bad credentials')
 
-            //TODO: Implement password validation and token generation
+            const isPasswordValid = this.comparePassword(password, user.password)
+            if (!isPasswordValid) throw CustomError.badRequest('Bad credentials')
+
             return UserMapper.transformObjectToUserEntity(user)
         } catch (error) {
             if (error instanceof CustomError) throw error
@@ -30,7 +41,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
         const user = await UserModel.create({
             email,
             name,
-            password //TODO: Implement password hashing
+            password: this.hashPassword(password)
         })
 
         await user.save()

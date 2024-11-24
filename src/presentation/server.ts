@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import { logger } from '@/config/logger'
 
 type Options = {
     port?: number
@@ -7,8 +8,8 @@ type Options = {
 
 export class Server {
     public readonly app: express.Application = express()
-    public readonly port: number
-    public readonly routes: Router
+    private readonly port: number
+    private readonly routes: Router
 
     constructor(options: Options) {
         const { port, routes } = options
@@ -17,6 +18,10 @@ export class Server {
     }
 
     async start() {
+        this.app.use((req, res, next) => {
+            logger.info({ method: req.method, url: req.url, timestamp: new Date().toISOString() })
+            next()
+        })
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }))
 

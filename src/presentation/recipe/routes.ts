@@ -4,11 +4,12 @@ import { RecipesController } from './controller'
 export class RecipesRoutes {
     static get routes() {
         const router = Router()
+        const controller = new RecipesController()
 
-        router.get('/:id', RecipesController.getRecipe)
-        router.post('/', RecipesController.create)
-        router.patch('/:id', RecipesController.update)
-        router.delete('/:id', RecipesController.delete)
+        router.get('/:id', controller.getRecipe)
+        router.post('/', controller.create)
+        router.patch('/:id', controller.update)
+        router.delete('/:id', controller.delete)
 
         return router
     }

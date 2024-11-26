@@ -35,9 +35,11 @@ export class RecipesController {
     }
 
     getUserRecipes = (req: Request, res: Response) => {
-        res.json({
-            message: `Get recipes`
-        })
+        const { id } = req.params
+        this.recipeUseCases.getUserRecipes
+            .execute(id)
+            .then((data) => res.json(data))
+            .catch((error) => this.handleError(error, res))
     }
 
     update = (req: Request, res: Response) => {

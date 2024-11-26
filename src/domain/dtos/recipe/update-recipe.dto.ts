@@ -8,13 +8,25 @@ export class UpdateRecipeDto {
         public readonly cookTime: number,
         public readonly preparation: string,
         public readonly difficulty: string,
+        public readonly createdBy?: string,
         public readonly img?: string,
         public readonly description?: string
     ) {}
 
     static create(object: { [key: string]: any }): [string?, UpdateRecipeDto?] {
-        const { title, notes, servings, tags, ingredients, cookTime, preparation, difficulty, img, description } =
-            object
+        const {
+            title,
+            notes,
+            servings,
+            tags,
+            ingredients,
+            cookTime,
+            preparation,
+            difficulty,
+            createdBy,
+            img,
+            description
+        } = object
         if (!title) return ['Missing title']
         if (!notes) return ['Missing notes']
         if (!servings) return ['Missing servings']
@@ -23,6 +35,7 @@ export class UpdateRecipeDto {
         if (!cookTime) return ['Missing cook time']
         if (!preparation) return ['Missing preparation']
         if (!difficulty) return ['Missing difficulty']
+        if (!createdBy) return ['Missing createdBy']
 
         return [
             undefined,
@@ -35,6 +48,7 @@ export class UpdateRecipeDto {
                 cookTime,
                 preparation,
                 difficulty,
+                createdBy,
                 img,
                 description
             )

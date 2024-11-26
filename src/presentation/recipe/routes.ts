@@ -27,7 +27,7 @@ export class RecipesRoutes {
 
         router.post('/', controller.create)
         router.get('/:id', controller.get)
-        router.get('/user', controller.getUserRecipes)
+        router.get('/user/:id', controller.getUserRecipes)
         router.patch('/:id', controller.update)
         router.delete('/:id', controller.delete)
 

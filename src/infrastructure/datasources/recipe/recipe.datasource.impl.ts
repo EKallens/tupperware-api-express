@@ -5,6 +5,7 @@ import { RecipeDatasource } from '../../../domain/datasources/recipe/recipe.data
 import { RecipeModel } from '@/data/mongodb/models/recipe.model'
 import { RecipeMapper } from '@/infrastructure/mappers/recipe/recipe.mapper'
 import { CustomError } from '@/domain/errors/custom.error'
+import { UserModel } from '@/data/mongodb/models/user.model'
 
 export class RecipeDatasourceImpl implements RecipeDatasource {
     async create(createRecipeDto: CreateRecipeDto): Promise<RecipeEntity> {
@@ -45,8 +46,12 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
     }
 
-    async findUserRecipes(): Promise<RecipeEntity[]> {
-        throw new Error('Method not implemented.')
+    async findUserRecipes(userId: string): Promise<RecipeEntity[]> {
+        const user = await UserModel.findOne({ _id: userId })
+        if (!user) throw CustomError.notFound('User not found')
+
+        const recipes = await RecipeModel.find({ createdBy: userId })
+        return recipes.map(RecipeMapper.transformObjectToRecipeEntity)
     }
 
     async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {

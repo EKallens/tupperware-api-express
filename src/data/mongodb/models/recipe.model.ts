@@ -38,8 +38,17 @@ const recipeSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Difficulty is required']
         },
+        isFavorite: {
+            type: Boolean,
+            default: false
+        },
         img: {
             type: String
+        },
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: [true, 'Created by is required']
         }
     },
     {

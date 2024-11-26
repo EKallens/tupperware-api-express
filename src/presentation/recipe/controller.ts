@@ -51,7 +51,7 @@ export class RecipesController {
             .catch((error) => this.handleError(error, res))
     }
 
-    delete = (req: Request, res: Response) => {
+    delete = async (req: Request, res: Response) => {
         const { id } = req.params
         return this.recipeUseCases.deleteRecipe
             .execute(id)

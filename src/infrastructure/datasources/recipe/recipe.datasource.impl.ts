@@ -55,6 +55,8 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
     }
 
     async delete(id: string): Promise<void> {
+        const recipe = await RecipeModel.findOne({ id })
+        if (!recipe) throw CustomError.notFound('Recipe not found')
         await RecipeModel.findByIdAndDelete(id)
     }
 }

@@ -8,6 +8,7 @@ import { GetRecipeUseCase } from '@/domain/use-cases/recipe/get-recipe.use-case'
 import { CreateRecipeUseCase } from '@/domain/use-cases/recipe/create-recipe.use-case'
 import { UpdateRecipeUseCase } from '@/domain/use-cases/recipe/update-recipe.use-case'
 import { DeleteRecipeUseCase } from '@/domain/use-cases/recipe/delete-recipe.use-case'
+import { AuthMiddleware } from '../middlewares/auth.middleware'
 
 export class RecipesRoutes {
     static get routes() {
@@ -25,11 +26,11 @@ export class RecipesRoutes {
 
         const controller = new RecipesController(recipeUseCases)
 
-        router.post('/', controller.create)
-        router.get('/:id', controller.get)
-        router.get('/user/:id', controller.getUserRecipes)
-        router.patch('/:id', controller.update)
-        router.delete('/:id', controller.delete)
+        router.post('/', AuthMiddleware.validateJwt, controller.create)
+        router.get('/:id', AuthMiddleware.validateJwt, controller.get)
+        router.get('/user/:id', AuthMiddleware.validateJwt, controller.getUserRecipes)
+        router.patch('/:id', AuthMiddleware.validateJwt, controller.update)
+        router.delete('/:id', AuthMiddleware.validateJwt, controller.delete)
 
         return router
     }

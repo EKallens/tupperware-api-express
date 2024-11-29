@@ -1,10 +1,10 @@
 export class UpdateTagDto {
-    private constructor(public id: string, public name: string) {}
+    private constructor(public name: string) {}
 
-    static create(id: string, name: string): [string?, UpdateTagDto?] {
-        if (!id) return ['Missing id']
+    static create(updateTagDto: UpdateTagDto): [string?, UpdateTagDto?] {
+        const { name } = updateTagDto
         if (!name) return ['Missing name']
 
-        return [undefined, new UpdateTagDto(id, name)]
+        return [undefined, new UpdateTagDto(name)]
     }
 }

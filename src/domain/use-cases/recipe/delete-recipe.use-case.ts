@@ -7,7 +7,7 @@ interface IDeleteRecipeUseCase {
 export class DeleteRecipeUseCase implements IDeleteRecipeUseCase {
     constructor(private readonly recipeRepository: RecipeRepository) {}
 
-    execute(id: string): Promise<void> {
-        return this.recipeRepository.delete(id)
+    async execute(id: string): Promise<void> {
+        return await this.recipeRepository.delete(id)
     }
 }

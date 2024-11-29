@@ -9,7 +9,7 @@ interface ICreateRecipeUseCase {
 export class CreateRecipeUseCase implements ICreateRecipeUseCase {
     constructor(private readonly recipeRepository: RecipeRepository) {}
 
-    execute(createRecipeDto: CreateRecipeDto): Promise<RecipeEntity> {
-        return this.recipeRepository.create(createRecipeDto)
+    async execute(createRecipeDto: CreateRecipeDto): Promise<RecipeEntity> {
+        return await this.recipeRepository.create(createRecipeDto)
     }
 }

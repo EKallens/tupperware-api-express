@@ -9,7 +9,7 @@ interface IUpdateRecipeUseCase {
 export class UpdateRecipeUseCase implements IUpdateRecipeUseCase {
     constructor(private readonly recipeRepository: RecipeRepository) {}
 
-    execute(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {
-        return this.recipeRepository.update(id, updateRecipeDto)
+    async execute(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {
+        return await this.recipeRepository.update(id, updateRecipeDto)
     }
 }

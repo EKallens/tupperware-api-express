@@ -27,10 +27,10 @@ export class RecipesRoutes {
         const controller = new RecipesController(recipeUseCases)
 
         router.post('/', AuthMiddleware.validateJwt, controller.create)
-        router.get('/:id', AuthMiddleware.validateJwt, controller.get)
+        router.get('/:id', AuthMiddleware.validateJwt, AuthMiddleware.validateRecipeBelongsToUser, controller.get)
         router.get('/user/:id', AuthMiddleware.validateJwt, controller.getUserRecipes)
-        router.patch('/:id', AuthMiddleware.validateJwt, controller.update)
-        router.delete('/:id', AuthMiddleware.validateJwt, controller.delete)
+        router.patch('/:id', AuthMiddleware.validateJwt, AuthMiddleware.validateRecipeBelongsToUser, controller.update)
+        router.delete('/:id', AuthMiddleware.validateJwt, AuthMiddleware.validateRecipeBelongsToUser, controller.delete)
 
         return router
     }

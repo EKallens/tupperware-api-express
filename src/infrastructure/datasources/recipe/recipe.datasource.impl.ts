@@ -19,6 +19,7 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
             preparation,
             difficulty,
             createdBy,
+            isFavorite,
             img,
             description
         } = createRecipeDto
@@ -32,9 +33,11 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
             preparation,
             difficulty,
             createdBy,
+            isFavorite,
             img,
             description
         })
+
         await recipe.save()
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
     }

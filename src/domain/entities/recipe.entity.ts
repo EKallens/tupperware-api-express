@@ -10,6 +10,9 @@ export class RecipeEntity {
         public readonly preparation: string,
         public readonly difficulty: string,
         public readonly createdBy: string,
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date,
+        public readonly isFavorite?: boolean,
         public readonly img?: string,
         public readonly description?: string
     ) {}

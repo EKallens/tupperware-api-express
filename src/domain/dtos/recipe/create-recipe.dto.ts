@@ -9,6 +9,7 @@ export class CreateRecipeDto {
         public readonly preparation: string,
         public readonly difficulty: string,
         public readonly createdBy: string,
+        public readonly isFavorite?: boolean,
         public readonly img?: string,
         public readonly description?: string
     ) {}
@@ -24,6 +25,7 @@ export class CreateRecipeDto {
             preparation,
             difficulty,
             createdBy,
+            isFavorite,
             img,
             description
         } = object
@@ -49,6 +51,7 @@ export class CreateRecipeDto {
                 preparation,
                 difficulty,
                 createdBy,
+                isFavorite,
                 img,
                 description
             )

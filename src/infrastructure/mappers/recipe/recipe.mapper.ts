@@ -15,6 +15,9 @@ export class RecipeMapper {
             preparation,
             difficulty,
             createdBy,
+            createdAt,
+            updatedAt,
+            isFavorite,
             img,
             description
         } = object
@@ -41,6 +44,9 @@ export class RecipeMapper {
             preparation,
             difficulty,
             createdBy,
+            createdAt,
+            updatedAt,
+            isFavorite,
             img,
             description
         )

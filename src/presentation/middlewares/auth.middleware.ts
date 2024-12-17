@@ -7,12 +7,9 @@ import { NextFunction, Request, Response } from 'express'
 export class AuthMiddleware {
     static validateJwt = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const authorization = req.header('Authorization')
-            if (!authorization) return res.status(401).json({ error: 'Unauthorize' })
+            const token = req.cookies.token
+            if (!token) return res.status(401).json({ error: 'Unauthorize - no token provided' })
 
-            if (!authorization.startsWith('Bearer ')) return res.status(401).json({ error: 'Invalid bearer token' })
-
-            const token = authorization.split(' ').at(1) || ''
             const payload = await JwtAdapter.validateToken<{ id: string }>(token)
             if (!payload) return res.status(401).json({ error: 'Invalid token' })
 

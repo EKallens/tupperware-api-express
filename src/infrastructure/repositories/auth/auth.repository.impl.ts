@@ -10,7 +10,24 @@ export class AuthRepositoryImpl implements AuthRepository {
     loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
         return this.authDatasource.loginUser(loginUserDto)
     }
+
     registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
         return this.authDatasource.registerUser(registerUserDto)
+    }
+
+    verifyEmail(token: string): Promise<void> {
+        return this.authDatasource.verifyEmail(token)
+    }
+
+    forgotPassword(email: string): Promise<UserEntity> {
+        return this.authDatasource.forgotPassword(email)
+    }
+
+    resetPassword(password: string, token: string): Promise<UserEntity> {
+        return this.authDatasource.resetPassword(password, token)
+    }
+
+    checkAuth(userId: string): Promise<UserEntity> {
+        return this.authDatasource.checkAuth(userId)
     }
 }

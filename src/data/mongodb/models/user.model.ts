@@ -18,6 +18,22 @@ const userSchema = new mongoose.Schema(
         img: {
             type: String
         },
+        isVerified: {
+            type: Boolean,
+            default: false
+        },
+        resetPasswordToken: {
+            type: String
+        },
+        resetPasswordExpiresAt: {
+            type: Date
+        },
+        verificationToken: {
+            type: String
+        },
+        verificationTokenExpiresAt: {
+            type: Date
+        },
         roles: {
             type: [String],
             default: ['USER_ROLE'],

@@ -4,5 +4,9 @@ import { UserEntity } from '@/domain/entities/user.entity'
 
 export interface AuthDataSource {
     loginUser(loginUserDto: LoginUserDto): Promise<UserEntity>
-    registerUser: (registerUserDto: RegisterUserDto) => Promise<UserEntity>
+    registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity>
+    verifyEmail(token: string): Promise<void>
+    forgotPassword(email: string): Promise<UserEntity>
+    resetPassword(password: string, token: string): Promise<UserEntity>
+    checkAuth(userId: string): Promise<UserEntity>
 }

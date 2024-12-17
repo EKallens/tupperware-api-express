@@ -3,6 +3,7 @@ import { logger } from '@/config/logger'
 import helmet from 'helmet'
 import cors from 'cors'
 import { corsOptions } from '@/config/cors'
+import cookieParser from 'cookie-parser'
 
 type Options = {
     port?: number
@@ -26,6 +27,7 @@ export class Server {
             next()
         })
         this.app.use(cors(corsOptions))
+        this.app.use(cookieParser())
         this.app.use(helmet())
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }))

@@ -3,6 +3,7 @@ import { logger } from '@/config/logger'
 import { RegisterUserDto } from '@/domain/dtos/auth/register-user.dto'
 import { CustomError } from '@/domain/errors/custom.error'
 import { UserToken } from '@/domain/interfaces/auth.interface'
+import { IEmailService } from '@/domain/interfaces/email-service.interface'
 import { AuthRepository } from '@/domain/repositories/auth/auth.repository'
 
 type SignToken = (payload: Object, duration?: string) => Promise<string | null>
@@ -14,6 +15,7 @@ interface IRegisterUserUseCase {
 export class RegisterUserUseCase implements IRegisterUserUseCase {
     constructor(
         private readonly authRepository: AuthRepository,
+        private readonly emailService: IEmailService,
         private readonly signToken: SignToken = JwtAdapter.generateToken
     ) {}
 
@@ -23,6 +25,16 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
 
         if (!token) throw CustomError.internalServer('Error generating token')
         logger.info({ message: { userRegistered: user.email }, timestamp: new Date().toISOString() })
+
+        await this.emailService.sendVerificationEmail(
+            [
+                {
+                    email: user.email,
+                    name: user.name
+                }
+            ],
+            user.verificationToken!
+        )
 
         return {
             token,

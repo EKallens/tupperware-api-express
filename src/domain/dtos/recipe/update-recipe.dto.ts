@@ -1,4 +1,4 @@
-import { UpdateRecipeSchema } from '@/domain/schemas/updateRecipeSchema'
+import { UpdateRecipeDtoType, UpdateRecipeSchema } from '@/domain/schemas/updateRecipeSchema'
 import { z } from 'zod'
 
 export class UpdateRecipeDto {
@@ -19,7 +19,7 @@ export class UpdateRecipeDto {
 
     static create(object: { [key: string]: any }): [string?, UpdateRecipeDto?] {
         try {
-            const dto = UpdateRecipeSchema.parse(object)
+            const dto: UpdateRecipeDtoType = UpdateRecipeSchema.parse(object)
             return [undefined, dto]
         } catch (error) {
             if (error instanceof z.ZodError) {

@@ -8,7 +8,7 @@ export const UpdateRecipeSchema = z.object({
     ingredients: z.string().optional(),
     cookTime: z.number().int().positive().optional(),
     preparation: z.string().optional(),
-    difficulty: z.number().int().min(1).max(5).optional(),
+    difficulty: z.number().int().min(1).max(3).optional(),
     createdBy: z.string().optional(),
     isFavorite: z.boolean().optional(),
     img: z.string().optional(),

@@ -1,7 +1,7 @@
 import { CreateRecipeDto } from '@/domain/dtos/recipe/create-recipe.dto'
 import { UpdateRecipeDto } from '@/domain/dtos/recipe/update-recipe.dto'
 import { RecipeEntity } from '@/domain/entities/recipe.entity'
-import { RecipeDatasource } from '../../../domain/datasources/recipe/recipe.datasource'
+import { RecipeDatasource } from '@/domain/datasources/recipe/recipe.datasource'
 import { RecipeModel } from '@/data/mongodb/models/recipe.model'
 import { RecipeMapper } from '@/infrastructure/mappers/recipe/recipe.mapper'
 import { CustomError } from '@/domain/errors/custom.error'
@@ -43,18 +43,34 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
     }
 
     async findById(id: string): Promise<RecipeEntity> {
-        const recipe = await RecipeModel.findById(id)
-        if (!recipe) throw CustomError.notFound('Recipe not found')
+        const recipe = await RecipeModel.findOne({ _id: id })
+        console.log(recipe)
+        if (!recipe) throw CustomError.notFound('La receta no existe')
 
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
     }
 
     async findUserRecipes(userId: string): Promise<RecipeEntity[]> {
         const user = await UserModel.findOne({ _id: userId })
-        if (!user) throw CustomError.notFound('User not found')
+        if (!user) throw CustomError.notFound('El usuario no existe')
 
         const recipes = await RecipeModel.find({ createdBy: userId })
-        return recipes.map(RecipeMapper.transformObjectToRecipeEntity)
+            .populate({
+                path: 'tags',
+                select: 'name'
+            })
+            .lean()
+
+        // Remove the change _id to id in the tags array
+        const recipesObject = recipes.map((recipe) => ({
+            ...recipe,
+            tags: recipe.tags.map((tag) => {
+                const { _id, ...rest } = tag
+                return { id: _id, ...rest }
+            })
+        }))
+
+        return recipesObject.map(RecipeMapper.transformObjectToRecipeEntity)
     }
 
     async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {
@@ -63,8 +79,8 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
     }
 
     async delete(id: string): Promise<void> {
-        const recipe = await RecipeModel.findOne({ id })
-        if (!recipe) throw CustomError.notFound('Recipe not found')
+        const recipe = await RecipeModel.findOne({ _id: id })
+        if (!recipe) throw CustomError.notFound('La receta no existe')
         await RecipeModel.findByIdAndDelete(id)
     }
 }

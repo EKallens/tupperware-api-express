@@ -21,7 +21,7 @@ export class TagDatasourceImpl implements TagDataSource {
 
     async findById(id: string): Promise<TagEntity> {
         const tag = await TagModel.findById(id)
-        if (!tag) throw CustomError.notFound('Tag not found')
+        if (!tag) throw CustomError.notFound('La etiqueta no existe')
 
         return TagMapper.transformToTagEntity(tag)
     }
@@ -34,7 +34,7 @@ export class TagDatasourceImpl implements TagDataSource {
 
     async delete(id: string): Promise<void> {
         const tag = await TagModel.findById(id)
-        if (!tag) throw CustomError.notFound('Tag not found')
+        if (!tag) throw CustomError.notFound('La etiqueta no existe')
 
         await TagModel.deleteOne({ _id: id })
     }

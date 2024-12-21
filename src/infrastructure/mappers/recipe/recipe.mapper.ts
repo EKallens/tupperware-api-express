@@ -22,7 +22,7 @@ export class RecipeMapper {
             description
         } = object
 
-        if (!id) throw CustomError.badRequest('Id is required')
+        if (!_id) throw CustomError.badRequest('Id is required')
         if (!title) throw CustomError.badRequest('Title is required')
         if (!notes) throw CustomError.badRequest('Notes is required')
         if (!servings) throw CustomError.badRequest('Servings is required')

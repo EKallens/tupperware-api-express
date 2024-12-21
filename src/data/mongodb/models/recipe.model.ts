@@ -17,11 +17,7 @@ const recipeSchema = new mongoose.Schema(
             type: Number,
             required: [true, 'Servings are required']
         },
-        tags: {
-            type: Schema.Types.ObjectId,
-            ref: 'Tag',
-            required: [true, 'Tags are required']
-        },
+        tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: true }],
         ingredients: {
             type: String,
             required: [true, 'Ingredients are required']
@@ -35,7 +31,8 @@ const recipeSchema = new mongoose.Schema(
             required: [true, 'Preparation is required']
         },
         difficulty: {
-            type: String,
+            type: Number,
+            enum: [1, 2, 3],
             required: [true, 'Difficulty is required']
         },
         isFavorite: {

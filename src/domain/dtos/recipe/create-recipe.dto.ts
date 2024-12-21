@@ -7,7 +7,7 @@ export class CreateRecipeDto {
         public readonly ingredients: string,
         public readonly cookTime: number,
         public readonly preparation: string,
-        public readonly difficulty: string,
+        public readonly difficulty: number,
         public readonly createdBy: string,
         public readonly isFavorite?: boolean,
         public readonly img?: string,

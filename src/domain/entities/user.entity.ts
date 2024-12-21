@@ -4,6 +4,7 @@ export class UserEntity {
         public readonly name: string,
         public readonly email: string,
         public readonly password: string,
+        public readonly isVerified: boolean,
         public readonly verificationToken: string,
         public readonly resetPasswordToken: string,
         public readonly resetPasswordExpiresAt: string,

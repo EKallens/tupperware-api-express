@@ -11,5 +11,6 @@ export const corsOptions: CorsOptions = {
         } else {
             callback(CustomError.badRequest('Not allowed by CORS'))
         }
-    }
+    },
+    credentials: true
 }

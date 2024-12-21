@@ -1,3 +1,4 @@
+import { logger } from '@/config/logger'
 import { CreateRecipeDto } from '@/domain/dtos/recipe/create-recipe.dto'
 import { UpdateRecipeDto } from '@/domain/dtos/recipe/update-recipe.dto'
 import { CustomError } from '@/domain/errors/custom.error'
@@ -8,11 +9,12 @@ export class RecipesController {
     constructor(private readonly recipeUseCases: RecipeUseCases) {}
 
     private handleError = (error: any, res: Response) => {
+        logger.error({ message: { error: error.message }, timestamp: new Date().toISOString() })
         if (error instanceof CustomError) {
             return res.status(error.statusCode).json({ error: error.message })
         }
 
-        return res.status(500).json({ error: 'Internal server error' })
+        return res.status(500).json({ error: error ?? 'Internal server error' })
     }
 
     create = (req: Request, res: Response) => {

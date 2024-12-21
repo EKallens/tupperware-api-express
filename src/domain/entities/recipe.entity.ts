@@ -8,7 +8,7 @@ export class RecipeEntity {
         public readonly ingredients: string,
         public readonly cookTime: number,
         public readonly preparation: string,
-        public readonly difficulty: string,
+        public readonly difficulty: number,
         public readonly createdBy: string,
         public readonly createdAt: Date,
         public readonly updatedAt: Date,

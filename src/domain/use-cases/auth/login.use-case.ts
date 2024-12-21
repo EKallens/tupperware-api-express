@@ -28,7 +28,8 @@ export class LoginUserUseCase implements ILoginUserUseCase {
             user: {
                 id: user.id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                isVerified: user.isVerified
             }
         }
     }

@@ -21,10 +21,10 @@ export class AuthDataSourceImpl implements AuthDataSource {
         const { email, password } = loginUserDto
         try {
             const user = await UserModel.findOne({ email })
-            if (!user) throw CustomError.badRequest('Bad credentials')
+            if (!user) throw CustomError.badRequest('Usuario o contraseña incorrectos')
 
             const isPasswordValid = this.comparePassword(password, user.password)
-            if (!isPasswordValid) throw CustomError.badRequest('Bad credentials')
+            if (!isPasswordValid) throw CustomError.badRequest('Usuario o contraseña incorrectos')
 
             return UserMapper.transformObjectToUserEntity(user)
         } catch (error) {
@@ -36,7 +36,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
     async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
         const { email, name, password } = registerUserDto
         const userExist = await UserModel.findOne({ email })
-        if (userExist) throw CustomError.badRequest('User already exists')
+        if (userExist) throw CustomError.badRequest('El correo ya está registrado')
         const verificationToken = generateVerificationToken()
 
         const user = await UserModel.create({
@@ -57,7 +57,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
             verificationTokenExpiresAt: { $gt: new Date() }
         })
 
-        if (!user) throw CustomError.badRequest('Invalid or expired verification token')
+        if (!user) throw CustomError.badRequest('El token de verificación es inválido o ha expirado')
 
         user.isVerified = true
         user.verificationToken = undefined
@@ -85,7 +85,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
             resetPasswordExpiresAt: { $gt: new Date() }
         })
 
-        if (!user) throw CustomError.badRequest('Invalid or expired reset token')
+        if (!user) throw CustomError.badRequest('El token de restablecimiento de contraseña es inválido o ha expirado')
 
         user.password = this.hashPassword(password)
         user.resetPasswordToken = undefined
@@ -97,7 +97,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
 
     async checkAuth(id: string): Promise<UserEntity> {
         const user = await UserModel.findOne({ _id: id }).select('-password')
-        if (!user) throw CustomError.badRequest('User not found')
+        if (!user) throw CustomError.badRequest('El usuario no existe')
 
         return UserMapper.transformObjectToUserEntity(user, false)
     }

@@ -67,7 +67,7 @@ export class AuthDataSourceImpl implements AuthDataSource {
 
     async forgotPassword(email: string): Promise<UserEntity> {
         const user = await UserModel.findOne({ email })
-        if (!user) throw CustomError.badRequest('User not found')
+        if (!user) throw CustomError.badRequest('El email no está registrado')
 
         const resetToken = generateResetToken()
         const resetTokenExpiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000)

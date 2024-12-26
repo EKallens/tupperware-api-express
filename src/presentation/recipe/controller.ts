@@ -39,8 +39,10 @@ export class RecipesController {
 
     getUserRecipes = (req: Request, res: Response) => {
         const { id } = req.params
+        const { favorites } = req.query
+
         this.recipeUseCases.getUserRecipes
-            .execute(id)
+            .execute(id, favorites === 'true' ? true : false)
             .then((data) => res.json(data))
             .catch((error) => this.handleError(error, res))
     }

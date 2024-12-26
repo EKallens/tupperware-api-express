@@ -12,6 +12,6 @@ export class UserDatasourceImpl implements UserDataSource {
 
         const user = await UserModel.findById(id)
         if (!user) throw CustomError.notFound('El usuario no existe')
-        return await UserModel.findOneAndUpdate({ _id: id }, { name, email }, { new: true })
+        return await UserModel.findOneAndUpdate({ _id: id }, { name, email }, { new: true }).select('id name email')
     }
 }

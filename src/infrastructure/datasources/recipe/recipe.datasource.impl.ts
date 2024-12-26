@@ -50,7 +50,7 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
     }
 
-    async findUserRecipes(userId: string): Promise<RecipeEntity[]> {
+    async findUserRecipes(userId: string, favorites = false): Promise<RecipeEntity[]> {
         if (!isObjectIdValid(userId)) throw CustomError.badRequest('El id no es válido')
         const user = await UserModel.findOne({ _id: userId })
         if (!user) throw CustomError.notFound('El usuario no existe')
@@ -71,7 +71,9 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
             })
         }))
 
-        return recipesObject.map(RecipeMapper.transformObjectToRecipeEntity)
+        return favorites
+            ? recipesObject.filter((recipe) => recipe.isFavorite).map(RecipeMapper.transformObjectToRecipeEntity)
+            : recipesObject.map(RecipeMapper.transformObjectToRecipeEntity)
     }
 
     async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {

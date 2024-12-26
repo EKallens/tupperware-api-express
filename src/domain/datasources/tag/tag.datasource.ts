@@ -4,7 +4,7 @@ import { TagEntity } from '@/domain/entities/tag.entity'
 
 export interface TagDataSource {
     create(createTagDto: CreateTagDto): Promise<TagEntity>
-    findAll(): Promise<TagEntity[]>
+    findUserTags(userId: string): Promise<TagEntity[]>
     findById(id: string): Promise<TagEntity>
     update(id: string, updateTagDto: UpdateTagDto): Promise<TagEntity>
     delete(id: string): Promise<void>

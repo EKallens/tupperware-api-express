@@ -5,11 +5,13 @@ import { AuthUseCases } from '@/domain/interfaces/auth.interface'
 import { CustomError } from '@/domain/errors/custom.error'
 import { setCookie } from '@/presentation/shared/cookies'
 import { HttpStatusCode } from '@/presentation/shared/status-codes'
+import { logger } from '@/config/logger'
 
 export class AuthController {
     constructor(private readonly authUseCases: AuthUseCases) {}
 
     private handleError = (error: any, res: Response) => {
+        logger.error({ message: { error: error.message }, timestamp: new Date().toISOString() })
         if (error instanceof CustomError) {
             return res.status(error.statusCode).json({ error: error.message })
         }

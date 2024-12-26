@@ -5,7 +5,7 @@ import { RecipeEntity } from '@/domain/entities/recipe.entity'
 export interface RecipeDatasource {
     create: (createRecipeDto: CreateRecipeDto) => Promise<RecipeEntity>
     findById: (id: string) => Promise<RecipeEntity>
-    findUserRecipes: (userId: string) => Promise<RecipeEntity[]>
+    findUserRecipes: (userId: string, favorites?: boolean) => Promise<RecipeEntity[]>
     update: (id: string, updateRecipeDto: UpdateRecipeDto) => Promise<RecipeEntity>
     delete: (id: string) => Promise<void>
 }

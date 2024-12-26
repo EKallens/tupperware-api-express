@@ -1,4 +1,6 @@
 import { TagModel } from '@/data/mongodb/models/tag.model'
+import { UserModel } from '@/data/mongodb/models/user.model'
+import { isObjectIdValid } from '@/data/mongodb/utils/objectIdValidator'
 import { TagDataSource } from '@/domain/datasources/tag/tag.datasource'
 import { CreateTagDto } from '@/domain/dtos/tag/create-tag.dto'
 import { UpdateTagDto } from '@/domain/dtos/tag/update-tag.dto'
@@ -8,14 +10,18 @@ import { TagMapper } from '@/infrastructure/mappers/tag/tag.mapper'
 
 export class TagDatasourceImpl implements TagDataSource {
     async create(createTagDto: CreateTagDto): Promise<TagEntity> {
-        const { name } = createTagDto
-        const tag = await TagModel.create({ name })
+        const { name, createdBy } = createTagDto
+        const tag = await TagModel.create({ name, createdBy })
 
         return TagMapper.transformToTagEntity(tag)
     }
 
-    async findAll(): Promise<TagEntity[]> {
-        const tags = await TagModel.find()
+    async findUserTags(userId: string): Promise<TagEntity[]> {
+        if (!isObjectIdValid(userId)) throw CustomError.badRequest('El id no es válido')
+        const user = await UserModel.findOne({ _id: userId })
+        if (!user) throw CustomError.notFound('El usuario no existe')
+
+        const tags = await TagModel.find({ createdBy: userId })
         return tags.map(TagMapper.transformToTagEntity)
     }
 

@@ -37,9 +37,10 @@ export class TagController {
             .catch((error) => this.handleError(error, res))
     }
 
-    getTags = (req: Request, res: Response) => {
-        this.tagUseCases.getAllTags
-            .execute()
+    getUserTags = (req: Request, res: Response) => {
+        const { id } = req.params
+        this.tagUseCases.getUserTags
+            .execute(id)
             .then((data) => res.json(data))
             .catch((error) => this.handleError(error, res))
     }

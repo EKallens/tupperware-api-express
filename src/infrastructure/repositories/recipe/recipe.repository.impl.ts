@@ -15,8 +15,8 @@ export class RecipeRepositoryImpl implements RecipeRepository {
         return this.recipeDatasource.findById(id)
     }
 
-    findUserRecipes(userId: string): Promise<RecipeEntity[]> {
-        return this.recipeDatasource.findUserRecipes(userId)
+    findUserRecipes(userId: string, favorites?: boolean): Promise<RecipeEntity[]> {
+        return this.recipeDatasource.findUserRecipes(userId, favorites)
     }
 
     update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {

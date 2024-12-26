@@ -8,7 +8,7 @@ interface IGetUserRecipesUseCase {
 export class GetUserRecipesUseCase implements IGetUserRecipesUseCase {
     constructor(private readonly recipeRepository: RecipeRepository) {}
 
-    async execute(userId: string): Promise<RecipeEntity[]> {
-        return await this.recipeRepository.findUserRecipes(userId)
+    async execute(userId: string, favorites = false): Promise<RecipeEntity[]> {
+        return await this.recipeRepository.findUserRecipes(userId, favorites)
     }
 }

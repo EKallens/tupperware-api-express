@@ -4,15 +4,11 @@ import { VerifyEmailUseCase } from '@/domain/use-cases/auth/verify-email.use-cas
 import { ForgotPasswordUseCase } from '@/domain/use-cases/auth/forgot-password.use-case'
 import { ResetPasswordUseCase } from '@/domain/use-cases/auth/reset-password.use-case'
 import { CheckAuthUseCase } from '@/domain/use-cases/auth/check-auth.use-case'
+import { IUser } from './user.interface'
 
-export interface UserToken {
+export interface AuthUserToken {
     token: string
-    user: {
-        id: string
-        email: string
-        name: string
-        isVerified: boolean
-    }
+    user: IUser
 }
 
 export interface AuthUseCases {

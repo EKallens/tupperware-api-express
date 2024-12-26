@@ -2,14 +2,14 @@ import { JwtAdapter } from '@/config/jwt'
 import { logger } from '@/config/logger'
 import { RegisterUserDto } from '@/domain/dtos/auth/register-user.dto'
 import { CustomError } from '@/domain/errors/custom.error'
-import { UserToken } from '@/domain/interfaces/auth.interface'
+import { AuthUserToken } from '@/domain/interfaces/auth.interface'
 import { IEmailService } from '@/domain/interfaces/email-service.interface'
 import { AuthRepository } from '@/domain/repositories/auth/auth.repository'
 
 type SignToken = (payload: Object, duration?: string) => Promise<string | null>
 
 interface IRegisterUserUseCase {
-    execute(registerUserDto: RegisterUserDto): Promise<UserToken>
+    execute(registerUserDto: RegisterUserDto): Promise<AuthUserToken>
 }
 
 export class RegisterUserUseCase implements IRegisterUserUseCase {
@@ -19,7 +19,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         private readonly signToken: SignToken = JwtAdapter.generateToken
     ) {}
 
-    async execute(registerUserDto: RegisterUserDto): Promise<UserToken> {
+    async execute(registerUserDto: RegisterUserDto): Promise<AuthUserToken> {
         const user = await this.authRepository.registerUser(registerUserDto)
         const token = await this.signToken({ id: user.id })
 

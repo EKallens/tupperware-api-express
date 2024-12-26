@@ -1,4 +1,4 @@
-import { UpdateRecipeDtoType, UpdateRecipeSchema } from '@/domain/schemas/updateRecipeSchema'
+import { UpdateRecipeDtoType, UpdateRecipeSchema } from '@/domain/schemas/recipe/updateRecipe.schema'
 import { z } from 'zod'
 
 export class UpdateRecipeDto {
@@ -20,7 +20,37 @@ export class UpdateRecipeDto {
     static create(object: { [key: string]: any }): [string?, UpdateRecipeDto?] {
         try {
             const dto: UpdateRecipeDtoType = UpdateRecipeSchema.parse(object)
-            return [undefined, dto]
+            const {
+                title,
+                notes,
+                servings,
+                tags,
+                ingredients,
+                cookTime,
+                preparation,
+                difficulty,
+                createdBy,
+                isFavorite,
+                img,
+                description
+            } = dto
+            return [
+                undefined,
+                new UpdateRecipeDto(
+                    title,
+                    notes,
+                    servings,
+                    tags,
+                    ingredients,
+                    cookTime,
+                    preparation,
+                    difficulty,
+                    createdBy,
+                    isFavorite,
+                    img,
+                    description
+                )
+            ]
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const errorMessages = error.errors.map((err) => err.message).join(', ')

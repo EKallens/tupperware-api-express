@@ -1,4 +1,4 @@
-import { CreateRecipeDtoType, CreateRecipeSchema } from '@/domain/schemas/createRecipeSchema'
+import { CreateRecipeDtoType, CreateRecipeSchema } from '@/domain/schemas/recipe/createRecipe.schema'
 import { z } from 'zod'
 
 export class CreateRecipeDto {
@@ -20,7 +20,37 @@ export class CreateRecipeDto {
     static create(object: { [key: string]: any }): [string?, CreateRecipeDto?] {
         try {
             const dto: CreateRecipeDtoType = CreateRecipeSchema.parse(object)
-            return [undefined, dto]
+            const {
+                title,
+                notes,
+                servings,
+                tags,
+                ingredients,
+                cookTime,
+                preparation,
+                difficulty,
+                createdBy,
+                isFavorite,
+                img,
+                description
+            } = dto
+            return [
+                undefined,
+                new CreateRecipeDto(
+                    title,
+                    notes,
+                    servings,
+                    tags,
+                    ingredients,
+                    cookTime,
+                    preparation,
+                    difficulty,
+                    createdBy,
+                    isFavorite,
+                    img,
+                    description
+                )
+            ]
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const errorMessages = error.errors.map((err) => err.message).join(', ')

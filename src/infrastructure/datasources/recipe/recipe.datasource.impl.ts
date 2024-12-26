@@ -6,6 +6,7 @@ import { RecipeModel } from '@/data/mongodb/models/recipe.model'
 import { RecipeMapper } from '@/infrastructure/mappers/recipe/recipe.mapper'
 import { CustomError } from '@/domain/errors/custom.error'
 import { UserModel } from '@/data/mongodb/models/user.model'
+import { isObjectIdValid } from '@/data/mongodb/utils/objectIdValidator'
 
 export class RecipeDatasourceImpl implements RecipeDatasource {
     async create(createRecipeDto: CreateRecipeDto): Promise<RecipeEntity> {
@@ -44,13 +45,13 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
 
     async findById(id: string): Promise<RecipeEntity> {
         const recipe = await RecipeModel.findOne({ _id: id })
-        console.log(recipe)
         if (!recipe) throw CustomError.notFound('La receta no existe')
 
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
     }
 
     async findUserRecipes(userId: string): Promise<RecipeEntity[]> {
+        if (!isObjectIdValid(userId)) throw CustomError.badRequest('El id no es válido')
         const user = await UserModel.findOne({ _id: userId })
         if (!user) throw CustomError.notFound('El usuario no existe')
 

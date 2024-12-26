@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
 import { TagController } from './controller'
 import { TagDatasourceImpl } from '@/infrastructure/datasources/tag/tag.datasource.impl'
 import { TagRepositoryImpl } from '@/infrastructure/repositories/tag/tag.repository.impl'

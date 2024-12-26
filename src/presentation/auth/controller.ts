@@ -14,7 +14,7 @@ export class AuthController {
             return res.status(error.statusCode).json({ error: error.message })
         }
 
-        return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' })
+        return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ error: error ?? 'Internal server error' })
     }
 
     loginUser = async (req: Request, res: Response) => {

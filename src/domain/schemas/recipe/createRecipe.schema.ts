@@ -1,18 +1,18 @@
 import { z } from 'zod'
 
 export const CreateRecipeSchema = z.object({
-    title: z.string(),
-    notes: z.string(),
-    servings: z.number().int().positive(),
+    title: z.string().min(1),
+    notes: z.string().min(1),
+    servings: z.string().min(1),
     tags: z.array(z.string()),
-    ingredients: z.string(),
-    cookTime: z.number().int().positive(),
-    preparation: z.string(),
-    difficulty: z.number().int().min(1).max(3),
-    createdBy: z.string(),
+    ingredients: z.string().min(1),
+    cookTime: z.string().min(1),
+    preparation: z.string().min(1),
+    difficulty: z.string().min(1),
+    createdBy: z.string().min(1),
     isFavorite: z.boolean().optional(),
-    img: z.string().optional(),
-    description: z.string().optional()
+    img: z.string().min(1).optional(),
+    description: z.string().min(1).optional()
 })
 
 export type CreateRecipeDtoType = z.infer<typeof CreateRecipeSchema>

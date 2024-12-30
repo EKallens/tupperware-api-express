@@ -44,7 +44,7 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
     }
 
     async findById(id: string): Promise<RecipeEntity> {
-        const recipe = await RecipeModel.findOne({ _id: id })
+        const recipe = await RecipeModel.findOne({ _id: id }).populate('tags', 'name')
         if (!recipe) throw CustomError.notFound('La receta no existe')
 
         return RecipeMapper.transformObjectToRecipeEntity(recipe)
@@ -66,7 +66,7 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
         const recipesObject = recipes.map((recipe) => ({
             ...recipe,
             tags: recipe.tags.map((tag) => {
-                const { _id, ...rest } = tag
+                const { _id, id, ...rest } = tag
                 return { id: _id, ...rest }
             })
         }))

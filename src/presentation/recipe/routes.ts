@@ -9,10 +9,14 @@ import { CreateRecipeUseCase } from '@/domain/use-cases/recipe/create-recipe.use
 import { UpdateRecipeUseCase } from '@/domain/use-cases/recipe/update-recipe.use-case'
 import { DeleteRecipeUseCase } from '@/domain/use-cases/recipe/delete-recipe.use-case'
 import { AuthMiddleware } from '../middlewares/auth.middleware'
+import { FilesMiddleware } from '../middlewares/files.middleware'
+import { UploadRecipeImageUseCase } from '@/domain/use-cases/recipe/upload-recipe-image.use-case'
+import { CloudinaryService } from '@/infrastructure/services/cloudinary.service'
 
 export class RecipesRoutes {
     static get routes() {
         const router = Router()
+        const fileService = new CloudinaryService()
         const recipeDatasource = new RecipeDatasourceImpl()
         const recipeRepository = new RecipeRepositoryImpl(recipeDatasource)
 
@@ -21,7 +25,8 @@ export class RecipesRoutes {
             getRecipeById: new GetRecipeUseCase(recipeRepository),
             createRecipe: new CreateRecipeUseCase(recipeRepository),
             updateRecipe: new UpdateRecipeUseCase(recipeRepository),
-            deleteRecipe: new DeleteRecipeUseCase(recipeRepository)
+            deleteRecipe: new DeleteRecipeUseCase(recipeRepository),
+            uploadImage: new UploadRecipeImageUseCase(fileService)
         }
 
         const controller = new RecipesController(recipeUseCases)
@@ -31,6 +36,7 @@ export class RecipesRoutes {
         router.get('/user/:id', AuthMiddleware.validateJwt, controller.getUserRecipes)
         router.patch('/:id', AuthMiddleware.validateJwt, AuthMiddleware.validateRecipeBelongsToUser, controller.update)
         router.delete('/:id', AuthMiddleware.validateJwt, AuthMiddleware.validateRecipeBelongsToUser, controller.delete)
+        router.post('/image', AuthMiddleware.validateJwt, FilesMiddleware.generateImagePath, controller.uploadImage)
 
         return router
     }

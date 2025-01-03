@@ -65,4 +65,13 @@ export class RecipesController {
             .then(() => res.json())
             .catch((error) => this.handleError(error, res))
     }
+
+    uploadImage = (req: Request, res: Response) => {
+        const imagePath = req.body.files.file[0].filepath
+
+        this.recipeUseCases.uploadImage
+            .execute(imagePath)
+            .then((data) => res.json({ filePath: data }))
+            .catch((error) => this.handleError(error, res))
+    }
 }

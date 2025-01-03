@@ -78,6 +78,7 @@ export class RecipeDatasourceImpl implements RecipeDatasource {
 
     async update(id: string, updateRecipeDto: UpdateRecipeDto): Promise<RecipeEntity> {
         const recipe = await RecipeModel.findOneAndUpdate({ _id: id }, updateRecipeDto, { new: true })
+        console.log(recipe)
         return RecipeMapper.transformObjectToRecipeEntity(recipe!)
     }
 

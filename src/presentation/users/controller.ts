@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
 import { CustomError } from '@/domain/errors/custom.error'
-import { UpdateUserUseCase } from '@/domain/use-cases/user/update-user.use-case'
 import { UpdateUserDto } from '@/domain/dtos/user/update-user.dto'
 import { logger } from '@/config/logger'
 import { HttpStatusCode } from '@/presentation/shared/status-codes'
+import { UserUseCases } from '@/domain/interfaces/user.interface'
 
 export class UserController {
-    constructor(private readonly updateUserUseCase: UpdateUserUseCase) {}
+    constructor(private readonly userUseCases: UserUseCases) {}
 
     private handleError = (error: any, res: Response) => {
         logger.error({ message: { error: error.message }, timestamp: new Date().toISOString() })
@@ -22,8 +22,18 @@ export class UserController {
         if (error) return res.status(HttpStatusCode.BAD_REQUEST).json({ error })
         const { id } = req.params
 
-        this.updateUserUseCase
+        this.userUseCases.update
             .execute(id, updateUserDto!)
+            .then((data) => res.json(data))
+            .catch((error) => this.handleError(error, res))
+    }
+
+    uploadImage = (req: Request, res: Response) => {
+        const imagePath = req.body.files.file[0].filepath
+        const id = req.body.fields.id[0]
+
+        this.userUseCases.uploadImage
+            .execute(id, imagePath)
             .then((data) => res.json(data))
             .catch((error) => this.handleError(error, res))
     }

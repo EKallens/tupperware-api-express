@@ -27,7 +27,7 @@ export class UserMapper {
             _id || id,
             name,
             email,
-            password,
+            includePassword ? password : undefined,
             isVerified,
             verificationToken,
             resetPasswordToken,

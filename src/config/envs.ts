@@ -9,5 +9,8 @@ export const envs = {
     ALLOWED_ORIGINS: get('ALLOWED_ORIGINS').required().asString(),
     NODE_ENV: get('NODE_ENV').required().asString(),
     MAILTRAP_TOKEN: get('MAILTRAP_TOKEN').required().asString(),
-    CLIENT_URL: get('CLIENT_URL').required().asString()
+    CLIENT_URL: get('CLIENT_URL').required().asString(),
+    CLOUDINARY_API_KEY: get('CLOUDINARY_API_KEY').required().asString(),
+    CLOUDINARY_API_SECRET: get('CLOUDINARY_API_SECRET').required().asString(),
+    CLOUDINARY_CLOUD_NAME: get('CLOUDINARY_CLOUD_NAME').required().asString()
 }

@@ -9,4 +9,8 @@ export class UserRepositoryImpl implements UserRepository {
     update(id: string, updateUserDto: UpdateUserDto): Promise<Pick<IUser, 'name' | 'email'> | null> {
         return this.userDatasource.update(id, updateUserDto)
     }
+
+    uploadImage(id: string, img: string): Promise<IUser> {
+        return this.userDatasource.uploadImage(id, img)
+    }
 }

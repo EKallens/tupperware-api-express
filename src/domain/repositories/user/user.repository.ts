@@ -3,4 +3,5 @@ import { IUser } from '@/domain/interfaces/user.interface'
 
 export interface UserRepository {
     update(id: string, updateUserDto: UpdateUserDto): Promise<Pick<IUser, 'name' | 'email'> | null>
+    uploadImage(id: string, img: string): Promise<IUser>
 }

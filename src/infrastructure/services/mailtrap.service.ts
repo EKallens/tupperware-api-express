@@ -3,11 +3,9 @@ import { mailtrapClient, sender } from '@/config/mailtrap'
 import { CustomError } from '@/domain/errors/custom.error'
 import { IEmailService } from '@/domain/interfaces/email-service.interface'
 import { Address, SendResponse } from 'mailtrap'
-import {
-    PASSWORD_RESET_REQUEST_TEMPLATE,
-    RESET_PASSWORD_EMAIL_TEMPLATE,
-    VERIFICATION_EMAIL_TEMPLATE
-} from '@/infrastructure/email/templates/verificationEmail'
+import { VERIFICATION_EMAIL_TEMPLATE } from '@/infrastructure/email/templates/verificationEmail'
+import { SUCCESS_PASSWORD_RESET_TEMPLATE } from '@/infrastructure/email/templates/successPasswordResetEmail'
+import { RESET_PASSWORD_EMAIL_TEMPLATE } from '@/infrastructure/email/templates/resetPasswordEmail'
 
 export class MailtrapService implements IEmailService {
     async sendVerificationEmail(to: Address[], verificationToken: string): Promise<SendResponse> {
@@ -17,7 +15,7 @@ export class MailtrapService implements IEmailService {
             const response = await mailtrapClient.send({
                 from: sender,
                 to: recipient,
-                subject: 'Verify your email',
+                subject: 'Verifica tu cuenta',
                 category: 'Email Verification',
                 html: VERIFICATION_EMAIL_TEMPLATE.replace('{verificationCode}', verificationToken)
             })
@@ -41,7 +39,7 @@ export class MailtrapService implements IEmailService {
             const response = await mailtrapClient.send({
                 from: sender,
                 to: recipient,
-                subject: 'Reset your password',
+                subject: 'Restablece tu contraseña',
                 category: 'Forgot Password',
                 html: RESET_PASSWORD_EMAIL_TEMPLATE.replace('{resetURL}', resetUrl)
             })
@@ -65,9 +63,9 @@ export class MailtrapService implements IEmailService {
             const response = await mailtrapClient.send({
                 from: sender,
                 to: recipient,
-                subject: 'Password successfully reset',
+                subject: 'Contraseña restablecida',
                 category: 'Reset Password',
-                html: PASSWORD_RESET_REQUEST_TEMPLATE
+                html: SUCCESS_PASSWORD_RESET_TEMPLATE
             })
 
             logger.info(`Reset password email successfully sent to ${to[0].email}`)

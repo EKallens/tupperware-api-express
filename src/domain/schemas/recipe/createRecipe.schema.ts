@@ -11,7 +11,7 @@ export const CreateRecipeSchema = z.object({
     difficulty: z.string().min(1),
     createdBy: z.string().min(1),
     isFavorite: z.boolean().optional(),
-    img: z.string().min(1).optional(),
+    img: z.string().optional(),
     description: z.string().min(1).optional()
 })
 

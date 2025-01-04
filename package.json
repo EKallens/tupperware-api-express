@@ -24,6 +24,7 @@
         "mailtrap": "^3.4.0",
         "module-alias": "^2.2.3",
         "mongoose": "^8.8.2",
+        "rimraf": "^6.0.1",
         "winston": "^3.17.0",
         "zod": "^3.24.1"
     },
@@ -36,7 +37,6 @@
         "@types/jsonwebtoken": "^9.0.7",
         "@types/node": "^22.9.1",
         "nodemon": "^3.1.7",
-        "rimraf": "^6.0.1",
         "ts-node": "^10.9.2",
         "ts-node-dev": "^2.0.0",
         "tsconfig-paths": "^4.2.0",

@@ -7,6 +7,7 @@ export const setCookie = (res: Response, token: string): void => {
         httpOnly: true,
         secure: NODE_ENV === 'production',
         sameSite: 'none',
-        maxAge: 1000 * 60 * 60 * 2
+        // maxAge: 1000 * 60 * 60 * 2,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
     })
 }

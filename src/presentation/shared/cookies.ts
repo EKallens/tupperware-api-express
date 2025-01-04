@@ -6,7 +6,7 @@ export const setCookie = (res: Response, token: string): void => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 1000 * 60 * 60 * 2
     })
 }

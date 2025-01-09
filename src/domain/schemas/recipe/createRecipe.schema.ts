@@ -12,7 +12,7 @@ export const CreateRecipeSchema = z.object({
     createdBy: z.string().min(1),
     isFavorite: z.boolean().optional(),
     img: z.string().optional(),
-    description: z.string().min(1).optional()
+    description: z.string().optional()
 })
 
 export type CreateRecipeDtoType = z.infer<typeof CreateRecipeSchema>

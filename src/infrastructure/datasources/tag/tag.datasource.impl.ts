@@ -11,9 +11,12 @@ import { TagMapper } from '@/infrastructure/mappers/tag/tag.mapper'
 export class TagDatasourceImpl implements TagDataSource {
     async create(createTagDto: CreateTagDto): Promise<TagEntity> {
         const { name, createdBy } = createTagDto
-        const tag = await TagModel.create({ name, createdBy })
+        if (!isObjectIdValid(createdBy)) throw CustomError.badRequest('El id no es válido')
+        const tag = await TagModel.findOne({ name, createdBy })
+        if (tag) throw CustomError.badRequest('La etiqueta ya existe')
+        const newTag = await TagModel.create({ name, createdBy })
 
-        return TagMapper.transformToTagEntity(tag)
+        return TagMapper.transformToTagEntity(newTag!)
     }
 
     async findUserTags(userId: string): Promise<TagEntity[]> {

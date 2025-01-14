@@ -25,7 +25,7 @@ export class TagController {
         this.tagUseCases.createTag
             .execute(createTagDto!)
             .then((data) => res.json(data))
-            .catch((error) => console.log(error))
+            .catch((error) => this.handleError(error, res))
     }
 
     get = (req: Request, res: Response) => {

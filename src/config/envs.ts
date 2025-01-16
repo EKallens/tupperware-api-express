@@ -12,5 +12,7 @@ export const envs = {
     CLIENT_URL: get('CLIENT_URL').required().asString(),
     CLOUDINARY_API_KEY: get('CLOUDINARY_API_KEY').required().asString(),
     CLOUDINARY_API_SECRET: get('CLOUDINARY_API_SECRET').required().asString(),
-    CLOUDINARY_CLOUD_NAME: get('CLOUDINARY_CLOUD_NAME').required().asString()
+    CLOUDINARY_CLOUD_NAME: get('CLOUDINARY_CLOUD_NAME').required().asString(),
+    API_URL: get('API_URL').required().asString(),
+    CRON_JOB_MINUTES: get('CRON_JOB_MINUTES').required().asIntPositive()
 }

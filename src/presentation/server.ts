@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import { corsOptions } from '@/config/cors'
 import cookieParser from 'cookie-parser'
+import { KeepAliveJob } from '@/infrastructure/cron/keepAliveJob'
 
 type Options = {
     port?: number
@@ -22,6 +23,7 @@ export class Server {
     }
 
     async start() {
+        KeepAliveJob.start()
         this.app.use((req, res, next) => {
             logger.info({ method: req.method, url: req.url, timestamp: new Date().toISOString() })
             next()

@@ -5,6 +5,7 @@ import cors from 'cors'
 import { corsOptions } from '@/config/cors'
 import cookieParser from 'cookie-parser'
 import { KeepAliveJob } from '@/infrastructure/cron/keepAliveJob'
+import { limiter } from './middlewares/rate-limit.middleware'
 
 type Options = {
     port?: number
@@ -23,7 +24,17 @@ export class Server {
     }
 
     async start() {
+        // Cron Job to keep the app alive
         KeepAliveJob.start()
+
+        // Middlewares
+        this.app.use(
+            limiter({
+                windowMs: 30 * 60 * 1000,
+                maxRequests: 50,
+                message: 'Too many requests, please try again later.'
+            })
+        )
         this.app.use((req, res, next) => {
             logger.info({ method: req.method, url: req.url, timestamp: new Date().toISOString() })
             next()

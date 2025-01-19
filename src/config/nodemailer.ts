@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import { google } from 'googleapis'
+//import { google } from 'googleapis'
 import { envs } from './envs'
 
 export const createTransporter = async () => {

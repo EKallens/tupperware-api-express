@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "nodemon",
         "build": "rimraf ./dist && tsc",
-        "start": "npm run build && node dist/app.js"
+        "start": "npm run build && node --max-old-space-size=4096 dist/app.js"
     },
     "author": "EKallens",
     "license": "ISC",

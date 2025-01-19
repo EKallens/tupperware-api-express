@@ -9,7 +9,7 @@ export interface Address {
 }
 
 export interface IEmailService {
-    sendVerificationEmail(to: Address[], verificationToken: string): Promise<EmailServiceResponse>
-    sendForgotPasswordEmail(to: Address[], resetUrl: string): Promise<EmailServiceResponse>
-    sendResetPasswordEmail(to: Address[]): Promise<EmailServiceResponse>
+    sendVerificationEmail(to: string, verificationToken: string): Promise<void>
+    sendForgotPasswordEmail(to: string, resetUrl: string): Promise<void>
+    sendResetPasswordEmail(to: string): Promise<void>
 }

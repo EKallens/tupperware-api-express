@@ -11,7 +11,7 @@ export const RESET_PASSWORD_EMAIL_TEMPLATE = `
                 <h1 style="color: white; margin: 0;">Restablecimiento de contraseña</h1>
             </div>
             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                <p>Hola,</p>
+                <p>Hola!</p>
                 <p>Hemos recibido una solicitud para restablecer tu contraseña. Si no realizaste esta solicitud, por favor ignora este correo.</p>
                 <p>Para restablecer tu contraseña, haz clic en el botón a continuación:</p>
                 <div style="text-align: center; margin: 30px 0;">

@@ -11,7 +11,7 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
                 <h1 style="color: white; margin: 0;">Verifica tu correo electrónico</h1>
             </div>
             <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                <p>Hola,</p>
+                <p>Hola!</p>
                 <p>¡Gracias por registrarte! Tu código de verificación es:</p>
                 <div style="text-align: center; margin: 30px 0;">
                 <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #1c2434;">{verificationCode}</span>

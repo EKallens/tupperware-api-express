@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
-//import { RegisterUserDto } from '@/domain/dtos/auth/register-user.dto'
-import { RegisterUserDto } from '../../domain/dtos/auth/register-user.dto'
+import { RegisterUserDto } from '@/domain/dtos/auth/register-user.dto'
 import { LoginUserDto } from '@/domain/dtos/auth/login-user.dto'
 import { AuthUseCases } from '@/domain/interfaces/auth.interface'
 import { CustomError } from '@/domain/errors/custom.error'
@@ -49,11 +48,11 @@ export class AuthController {
 
     verifyEmail = async (req: Request, res: Response) => {
         const { token } = req.body
-        if (!token) return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Token is required' })
+        if (!token) return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Debes ingresar un código' })
 
         await this.authUseCases.verifyEmail
             .execute(token)
-            .then(() => res.status(HttpStatusCode.OK).json({ message: 'Email verified' }))
+            .then(() => res.status(HttpStatusCode.OK).json({ message: 'Correo verificado!' }))
             .catch((error) => this.handleError(error, res))
     }
 

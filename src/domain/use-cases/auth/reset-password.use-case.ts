@@ -10,7 +10,6 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
 
     async execute(password: string, token: string): Promise<void> {
         const user = await this.authRepository.resetPassword(password, token)
-
-        await this.emailService.sendResetPasswordEmail([{ email: user.email, name: user.name }])
+        await this.emailService.sendResetPasswordEmail(user.email)
     }
 }

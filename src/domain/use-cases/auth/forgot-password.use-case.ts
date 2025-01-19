@@ -14,7 +14,7 @@ export class ForgotPasswordUseCase implements IForgetPasswordUseCase {
         const clientUrl = envs.CLIENT_URL
 
         await this.emailService.sendForgotPasswordEmail(
-            [{ email: user.email, name: user.name }],
+            user.email,
             `${clientUrl}/auth/reset-password/${user.resetPasswordToken}`
         )
     }

@@ -26,15 +26,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         if (!token) throw CustomError.internalServer('Error generating token')
         logger.info({ message: { userRegistered: user.email }, timestamp: new Date().toISOString() })
 
-        await this.emailService.sendVerificationEmail(
-            [
-                {
-                    email: user.email,
-                    name: user.name
-                }
-            ],
-            user.verificationToken!
-        )
+        await this.emailService.sendVerificationEmail(user.email, user.verificationToken!)
 
         return {
             token,

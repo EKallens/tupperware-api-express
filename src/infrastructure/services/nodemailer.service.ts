@@ -12,7 +12,7 @@ export class NodeMailerService implements IEmailService {
             const transporter = await createTransporter()
             const mailOptions = {
                 from: 'e.kallensp@gmail.com',
-                to: 'e.kallensp@gmail.com',
+                to,
                 subject: 'Verifica tu cuenta',
                 html: VERIFICATION_EMAIL_TEMPLATE.replace('{verificationCode}', verificationToken)
             }

@@ -4,8 +4,9 @@ import { LoginUserDto } from '@/domain/dtos/auth/login-user.dto'
 import { CustomError } from '@/domain/errors/custom.error'
 import { AuthUserToken } from '@/domain/interfaces/auth.interface'
 import { AuthRepository } from '@/domain/repositories/auth/auth.repository'
+import type {StringValue} from "ms";
 
-type SignToken = (payload: Object, duration?: string) => Promise<string | null>
+type SignToken = (payload: Object, duration?: StringValue | number) => Promise<string | null>
 interface ILoginUserUseCase {
     execute(loginUserDto: LoginUserDto): Promise<AuthUserToken>
 }

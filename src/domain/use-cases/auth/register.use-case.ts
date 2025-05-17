@@ -5,8 +5,9 @@ import { CustomError } from '@/domain/errors/custom.error'
 import { AuthUserToken } from '@/domain/interfaces/auth.interface'
 import { IEmailService } from '@/domain/interfaces/email-service.interface'
 import { AuthRepository } from '@/domain/repositories/auth/auth.repository'
+import type {StringValue} from "ms";
 
-type SignToken = (payload: Object, duration?: string) => Promise<string | null>
+type SignToken = (payload: Object, duration?: StringValue | number) => Promise<string | null>
 
 interface IRegisterUserUseCase {
     execute(registerUserDto: RegisterUserDto): Promise<AuthUserToken>
